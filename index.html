@@ -260,13 +260,14 @@
             background-image: url('https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1600');
             background-size: cover;
             background-position: center;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            background-color: #2c2c2c; /* fallback */
+            background-color: #2c2c2c;
+            padding: 40px 20px;
         }
         .hero .btn {
             border-color: white;
@@ -276,36 +277,37 @@
             background: white;
             color: black;
         }
-        .hero h1, .hero .date-large {
+        .hero h1, .hero .date-large, .hero .names-calligraphy {
             color: white;
             text-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
-/* Каллиграфический шрифт для имён */
-.names-calligraphy {
-    font-family: 'Great Vibes', cursive;
-    font-size: 56px;
-    margin: 20px 0;
-    color: white;
-    text-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
 
-/* Чёрная линия под THE WEDDING DAY */
-.divider {
-    width: 80px;
-    height: 2px;
-    background-color: white;
-    margin: 20px auto;
-}
+        /* Каллиграфический шрифт для имён */
+        .names-calligraphy {
+            font-family: 'Great Vibes', cursive;
+            font-size: 56px;
+            margin: 20px 0;
+        }
 
-/* Фотография в hero-блоке */
-.hero-photo {
-    max-width: 90%;
-    max-height: 40vh;
-    object-fit: cover;
-    border-radius: 8px; /* чуть скругляем углы, можно убрать */
-    margin: 20px 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
+        /* Чёрточка */
+        .divider {
+            width: 80px;
+            height: 2px;
+            background-color: white;
+            margin: 20px auto;
+        }
+
+        /* Фотография в hero-блоке */
+        .hero-photo {
+            max-width: 90%;
+            max-height: 50vh;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
         /* ----- АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ----- */
         @media (max-width: 768px) {
             .section {
@@ -327,27 +329,27 @@
                 font-size: 40px;
                 letter-spacing: 4px;
             }
+            .names-calligraphy {
+                font-size: 36px;
+            }
+            .hero-photo {
+                max-height: 35vh;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <!-- ГЛАВНЫЙ ЭКРАН (HERO) - исправленный, без дублей -->
     <div class="hero">
-    <div>
-        <h1>THE WEDDING DAY</h1>
-        <div class="divider"></div>
-        <div class="names-calligraphy">Павел и Ирина</div>
-        
-        <!-- Здесь будет ваша фотография -->
-        <img src="wedding-photo.jpg" alt="Павел и Ирина" class="hero-photo">
-        
-        <div class="date-large">02.06.2026 | 16:00</div>
-        <a href="#rsvp" class="btn">Подтвердить присутствие</a>
-    </div>
-</div>
         <div>
             <h1>THE WEDDING DAY</h1>
+            <div class="divider"></div>
+            <div class="names-calligraphy">Павел и Ирина</div>
+            
+            <!-- ФОТОГРАФИЯ: замените 'wedding-photo.jpg' на имя вашего файла -->
+            <img src="wedding-photo.jpg" alt="Павел и Ирина" class="hero-photo" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x600?text=Ваше+фото+здесь';">
+            
             <div class="date-large">02.06.2026 | 16:00</div>
             <a href="#rsvp" class="btn">Подтвердить присутствие</a>
         </div>
@@ -489,9 +491,8 @@
             const daysContainer = document.getElementById('calendarDays');
             if (!daysContainer) return;
             const year = 2026;
-            const month = 5; // 5 = июнь (0-индексация)
-            const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 = воскресенье
-            // Сдвиг для начала с понедельника: 0 воскресенье -> 6, пн -> 0, вт -> 1 и т.д.
+            const month = 5; // 5 = июнь
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
             let startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let calendarHTML = '';
@@ -516,7 +517,7 @@
             daysContainer.innerHTML = calendarHTML;
         }
 
-        // ---------- ТАЙМЕР ОБРАТНОГО ОТСЧЁТА ----------
+        // ---------- ТАЙМЕР ----------
         function updateTimer() {
             const weddingDate = new Date("June 2, 2026 16:00:00").getTime();
             const now = new Date().getTime();
@@ -539,34 +540,20 @@
             `;
         }
 
-        // ---------- ОТПРАВКА ФОРМЫ (ДЕМО-РЕЖИМ) ----------
+        // ---------- ФОРМА (ДЕМО) ----------
         document.getElementById('rsvpForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             const formStatus = document.getElementById('formStatus');
             if (formStatus) {
                 formStatus.innerHTML = '<div style="color: green;">Спасибо! Ваш ответ получен.</div>';
                 this.reset();
-                // Если хотите получать письма, замените этот блок на код Formspree (см. комментарий ниже)
                 console.log('RSVP данные:', new FormData(this));
             }
         });
 
-        // ---------- ЗАПУСК ВСЕХ ФУНКЦИЙ ----------
         generateCalendar();
         updateTimer();
         setInterval(updateTimer, 1000);
     </script>
-
-    <!-- 
-        ДЛЯ НАСТРОЙКИ РЕАЛЬНОЙ ОТПРАВКИ ПИСЕМ:
-        1. Зайдите на formspree.io, зарегистрируйтесь.
-        2. Создайте новый проект и получите эндпоинт вида https://formspree.io/f/xxxxx.
-        3. В атрибут action тега <form> вставьте этот эндпоинт, а method="POST".
-        4. Уберите обработчик submit, который выводит "Спасибо" в консоль.
-        Пример:
-        <form action="https://formspree.io/f/ваш_ключ" method="POST">
-          ... поля ...
-        </form>
-    -->
 </body>
 </html>
