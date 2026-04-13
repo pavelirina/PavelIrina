@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Павел & Ирина | Приглашение на свадьбу</title>
+    <!-- Основные шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- Каллиграфические шрифты (Comforter, Comforter Brush, Great Vibes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comforter&family=Comforter+Brush&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         /* ----- СБРОС И ОБЩИЕ НАСТРОЙКИ ----- */
         * {
@@ -282,19 +286,25 @@
             text-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
 
-        /* Каллиграфический шрифт для имён */
-        .names-calligraphy {
-            font-family: 'Great Vibes', cursive;
-            font-size: 56px;
+        /* Контейнер для заголовка и полоски, чтобы полоска была шириной в слово */
+        .title-wrapper {
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Полоска теперь такой же ширины, как и текст заголовка */
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: white;
             margin: 20px 0;
         }
 
-        /* Чёрточка */
-        .divider {
-            width: 80px;
-            height: 2px;
-            background-color: white;
-            margin: 20px auto;
+        /* Каллиграфический шрифт для имён (Comforter Brush) */
+        .names-calligraphy {
+            font-family: 'Comforter Brush', cursive;
+            font-size: 56px;
+            margin: 20px 0;
         }
 
         /* Фотография в hero-блоке */
@@ -340,11 +350,14 @@
 </head>
 <body>
 
-    <!-- ГЛАВНЫЙ ЭКРАН (HERO) - исправленный, без дублей -->
+    <!-- ГЛАВНЫЙ ЭКРАН (HERO) -->
     <div class="hero">
         <div>
-            <h1>THE WEDDING DAY</h1>
-            <div class="divider"></div>
+            <!-- Оборачиваем заголовок и полоску в общий контейнер -->
+            <div class="title-wrapper">
+                <h1>THE WEDDING DAY</h1>
+                <div class="divider"></div>
+            </div>
             <div class="names-calligraphy">Павел и Ирина</div>
             
             <!-- ФОТОГРАФИЯ: замените 'wedding-photo.jpg' на имя вашего файла -->
@@ -405,10 +418,7 @@
             <div style="margin: 20px 0;">
                 <a href="#" class="btn" style="margin: 0 10px;">Как добраться</a>
                 <a href="#rsvp" class="btn" style="margin: 0 10px;">Подтвердить присутствие</a>
-            </div>
-            <div class="map-placeholder">
-                Здесь будет карта (можно вставить код от Яндекс.Карт)
-            </div>
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A61be4eb1cbc37a2feb332c1f432abf51890675bf3200585323a826a758238915&amp;source=constructor" width="100%" height="615" frameborder="0"></iframe>
         </div>
     </div>
 
