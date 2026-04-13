@@ -112,7 +112,7 @@
             text-align: center;
         }
 
-        /* ----- НОВЫЙ КАЛЕНДАРЬ ----- */
+        /* ----- НОВЫЙ ИНТЕРАКТИВНЫЙ КАЛЕНДАРЬ ----- */
         .calendar-wrapper {
             max-width: 400px;
             margin: 0 auto;
@@ -185,7 +185,7 @@
             text-align: center;
         }
 
-        /* ----- ТАЙМИНГ ----- */
+        /* ----- ИСПРАВЛЕННЫЙ ТАЙМИНГ ----- */
         .timing-list {
             max-width: 400px;
             margin: 0 auto;
@@ -256,7 +256,7 @@
             margin-top: 10px;
         }
 
-        /* ----- КАРТА (квадратная) ----- */
+        /* ----- КВАДРАТНАЯ КАРТА ----- */
         .map-container {
             position: relative;
             width: 100%;
@@ -326,7 +326,7 @@
             margin: 20px 0;
         }
 
-        /* Шрифт Le Jardin */
+        /* ----- ПОДКЛЮЧЕНИЕ ВАШЕГО ШРИФТА LE JARDIN ----- */
         @font-face {
             font-family: 'Le Jardin';
             src: url('LeJardinRegular.woff2') format('woff2'),
@@ -336,10 +336,19 @@
             font-display: swap;
         }
 
+        /* Имена Павел и Ирина */
         .names-calligraphy {
             font-family: 'Le Jardin', 'Comforter Brush', 'Great Vibes', cursive;
             font-size: 54px;
             margin: 20px 0;
+        }
+
+        /* Заголовок "ОФИЦИАЛЬНО СТАНЕМ СЕМЬЁЙ" тоже шрифтом Le Jardin */
+        .official-title {
+            font-family: 'Le Jardin', 'Comforter Brush', 'Great Vibes', cursive;
+            font-size: 48px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
         }
 
         .hero-photo {
@@ -362,6 +371,9 @@
             }
             h2 {
                 font-size: 32px;
+            }
+            .official-title {
+                font-size: 36px;
             }
             .timer {
                 gap: 20px;
@@ -422,12 +434,12 @@
         </div>
     </div>
 
-    <!-- ОФИЦИАЛЬНАЯ ЧАСТЬ -->
+    <!-- ОФИЦИАЛЬНАЯ ЧАСТЬ (шрифт Le Jardin) -->
     <div class="section text-center">
         <div class="container">
-            <h2>ОФИЦИАЛЬНО<br>СТАНЕМ СЕМЬЁЙ</h2>
+            <h2 class="official-title">Дорогой<br>гость</h2>
             <div class="subtitle">
-                Если вы сейчас читаете этот текст, значит совсем скоро вы увидите одного из нас в свадебном платье и думаем, что вы догадываетесь, кого именно...
+                Если вы сейчас читаете этот текст, значит бла бла бла....
             </div>
             <a href="#rsvp" class="btn">Подтвердить присутствие</a>
         </div>
@@ -446,10 +458,10 @@
         </div>
     </div>
 
-    <!-- КАЛЕНДАРЬ С ДАТОЙ -->
+    <!-- КАЛЕНДАРЬ С ДАТОЙ (сердечко на 2 июня) -->
     <div class="section text-center">
         <div class="container">
-            <h2>МЫ ЖДЁМ ВАС</h2>
+            <h2>МЫ ЖДЁМ ВАС</h2>   <!-- убрано "всё" -->
             <div class="calendar-wrapper">
                 <div class="calendar-header">
                     <button id="prevMonthBtn">←</button>
@@ -472,7 +484,7 @@
             <h2>НАША СВАДЬБА<br>ПРОЙДЁТ В</h2>
             <h3>«ТАГАНСКИЙ ДВОРЕЦ БРАКОСОЧИТАНИЯ»</h3>
             <div class="subtitle">
-                Адрес: Московская область,<br>городской округ Мытищи,<br>Хлебниковский лесопарк
+                Адрес: Москва,<br>Таганская ул.,<br>44
             </div>
             <div style="margin: 20px 0;">
                 <a href="#" class="btn" style="margin: 0 10px;">Как добраться</a>
@@ -486,7 +498,7 @@
         </div>
     </div>
 
-    <!-- ТАЙМИНГ -->
+    <!-- ТАЙМИНГ (исправлен) -->
     <div class="section text-center">
         <div class="container">
             <h2>ТАЙМИНГ</h2>
@@ -562,7 +574,7 @@
     </div>
 
     <script>
-        // ---------- НОВЫЙ ИНТЕРАКТИВНЫЙ КАЛЕНДАРЬ ----------
+        // ---------- ИНТЕРАКТИВНЫЙ КАЛЕНДАРЬ С СЕРДЕЧКОМ ----------
         let currentDate = new Date(2026, 5, 1); // Июнь 2026 (месяц 5)
         const targetDate = new Date(2026, 5, 2); // 2 июня 2026
 
@@ -577,7 +589,7 @@
             const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             document.getElementById('monthYearDisplay').innerText = `${monthNames[month]} ${year}`;
             
-            // Получаем первый день месяца и количество дней
+            // Первый день месяца и количество дней
             const firstDayOfMonth = new Date(year, month, 1).getDay();
             let startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
             const daysInMonth = new Date(year, month + 1, 0).getDate();
