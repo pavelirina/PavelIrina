@@ -7,102 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
     
     <style>
-	/* Стили для фона и контейнера конверта */
-#envelope-wrapper {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: #e5ddd3; /* Цвет фона за конвертом */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    transition: opacity 1s ease, visibility 1s;
-}
-
-/* Сам конверт */
-.envelope {
-    position: relative;
-    width: 300px;
-    height: 200px;
-    background: #d4c7b8;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: transform 0.5s ease;
-}
-
-.envelope:hover {
-    transform: translateY(-10px) scale(1.02);
-}
-
-/* Верхний клапан (крышка) конверта */
-.envelope::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    z-index: 2;
-    border-top: 110px solid #c5b6a5;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    transform-origin: top;
-    transition: transform 0.5s ease 0.1s;
-}
-
-/* Состояние при открытии — крышка откидывается */
-.envelope.open::before {
-    transform: rotateX(180deg);
-    z-index: 0;
-}
-
-/* Листок бумаги внутри конверта */
-.envelope-paper {
-    position: absolute;
-    top: 10px; left: 10px; right: 10px; bottom: 10px;
-    background: white;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.8s ease;
-}
-
-/* Листок выезжает вверх */
-.envelope.open .envelope-paper {
-    transform: translateY(-120px);
-}
-
-/* Текст на листке и надпись на конверте */
-.envelope-text {
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.7rem;
-    color: #2c2e36;
-}
-
-.envelope-label {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-family: 'LeJardin', cursive;
-    font-size: 2rem;
-    color: white;
-    z-index: 3;
-    pointer-events: none;
-}
-
-/* Состояния для основного контента сайта */
-#main-content {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.5s ease;
-}
-
-#main-content.visible {
-    opacity: 1;
-    visibility: visible;
-}
         /* Подключение вашего рукописного шрифта */
         @font-face {
             font-family: 'LeJardin';
@@ -164,7 +68,7 @@
         /* ЭФФЕКТ ПАРАЛЛАКСА ДЛЯ ФОТО */
         .parallax-container {
             width: 100%;
-            height: 180px;
+            height: 350px;
             overflow: hidden;
             position: relative;
             margin: 25px 0;
@@ -182,15 +86,32 @@
             will-change: transform;
         }
 
-        /* Герой-секция */
+        /* === ИСПРАВЛЕННАЯ Герой-секция === */
         .hero-section {
-         height: 100vh;
-         background-image: url('шапка.png');
-         background-size: cover; /* Картинка заполняет весь экран */
-         background-position: center center; /* Центрируем по вертикали и горизонтали */
-         background-repeat: no-repeat;
-         /* На мобильных устройствах принудительно отключаем фиксацию */
-         background-attachment: scroll;
+            height: 100vh;
+            /* Фикс для мобильных устройств, чтобы высота считалась без учета панелей браузера */
+            min-height: 100dvh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('чб.png'); /* Ваше фото */
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 0 25px;
+            position: relative;
+            /* Стандартное поведение для мобилок (решает баг iPhone) */
+            background-attachment: scroll; 
+        }
+
+        /* Включаем фиксированный фон только на ПК (где есть мышка) */
+        @media (hover: hover) and (pointer: fine) {
+            .hero-section {
+                background-attachment: fixed;
+            }
         }
 
         .cursive {
@@ -538,26 +459,13 @@
     </style>
 </head>
 <body>
-<div id="envelope-wrapper">
-    <div class="envelope" id="envelope" onclick="openEnvelope()">
-        <div class="envelope-paper">
-            <div class="envelope-text">
-                <p>Павел & Ирина</p>
-                <p style="font-size: 0.5rem; margin-top: 10px;">Нажмите, чтобы открыть</p>
-            </div>
-        </div>
-        <div class="envelope-label">Приглашение</div>
-    </div>
-</div>
 
-<div id="main-content">
-    </div>
 <div class="main-wrapper">
     
-    <!-- Секция 1: Герой -->
+    <!-- Секция 1: Герой (inline стиль удален, все управляется через CSS) -->
     <section class="hero-section">
         <div style="letter-spacing: 5px; text-transform: uppercase; font-size: 1.1rem; margin-top: -80px;">The Wedding Day</div>
-        <div class="cursive" style="margin: 40px 0;">Павел & Ирина</div>
+        <div class="cursive" style="margin: 20px 0;">Павел & Ирина</div>
     </section>
 
     <!-- Секция 2: Приветствие -->
@@ -607,19 +515,19 @@
     <!-- Секция 5: Локация 1 -->
     <section class="reveal">
         <div class="cursive">Локация №1</div>
-        <p class="section-title">Таганский Дворец Бракосочетания</p>
+        <p class="section-title">Дворец Бракосочетания</p>
         
         <div class="parallax-container">
             <div class="parallax-img" style="background-image: url('загс.jpg');"></div>
         </div>
         
-        <h3 style="letter-spacing: 3px; font-weight: 500;">АДРЕС ЗАГСА</h3>
+        <h3 style="letter-spacing: 3px; font-weight: 500;">ТАГАНСКИЙ ЗАГС</h3>
         <p style="font-size: 0.85rem; color: #666;">г. Москва, Таганская ул., 44</p>
         
         <div class="map-wrapper">
             <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A61be4eb1cbc37a2feb332c1f432abf51890675bf3200585323a826a758238915&amp;source=constructor"></iframe>
         </div>
-        <a href="yandexmaps://maps.yandex.ru/?rtext=~55.741544,37.668541&rtt=auto" class="btn">Проложить маршрут</a>
+        <a href="https://yandex.ru/maps/-/CDuay-Yn" target="_blank" class="btn">Маршрут в ЗАГС</a>
     </section>
 
     <!-- Секция 6: Локация 2 -->
@@ -628,16 +536,16 @@
         <p class="section-title">Праздничный ужин</p>
         
         <div class="parallax-container">
-            <div class="parallax-img" style="background-image: url('https://safarovadom.com/upload/dev2fun.imagecompress/webp/resize_cache/iblock/85c/800_600_0/eussl8bvtx772j02eh3uz1mz1k1wuoxt.webp');"></div>
+            <div class="parallax-img" style="background-image: url('домик.jpg');"></div>
         </div>
         
         <h3 style="letter-spacing: 3px; font-weight: 500;">ЗАГОРОДНЫЙ ДОМИК</h3>
-        <p style="font-size: 0.85rem; color: #666;">Городской округ Балашиха, Садовое товарищество Вымпел, 4</p>
+        <p style="font-size: 0.85rem; color: #666;">МО, Истринский район, пос. Светлый</p>
         
         <div class="map-wrapper">
-          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Afd1b42d456cdfdb0e80fcc7513180195dbdf020a153a7eaa7651154928934d08&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=36.848529%2C55.918901&z=12"></iframe>
         </div>
-        <a href="yandexmaps://maps.yandex.ru/?rtext=~55.845920,37.957512&rtt=auto" class="btn">Маршрут к дому</a>
+        <a href="https://yandex.ru/maps" target="_blank" class="btn">Маршрут к Домику</a>
     </section>
 
     <!-- Тайминг -->
@@ -775,25 +683,6 @@
 </div>
 
 <script>
-function openEnvelope() {
-    const envelope = document.getElementById('envelope');
-    const wrapper = document.getElementById('envelope-wrapper');
-    const main = document.getElementById('main-content');
-
-    // 1. Запускаем анимацию самого конверта
-    envelope.classList.add('open');
-    
-    // 2. Через небольшую паузу скрываем слой с конвертом и показываем сайт
-    setTimeout(() => {
-        wrapper.style.opacity = '0'; // Плавно растворяем фон конверта
-        main.classList.add('visible'); // Проявляем основной сайт
-        
-        // 3. Полностью убираем слой конверта, чтобы он не мешал кликам
-        setTimeout(() => {
-            wrapper.style.visibility = 'hidden';
-        }, 1000);
-    }, 800);
-}
     // АНИМАЦИЯ ПРИ СКРОЛЛЕ
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
