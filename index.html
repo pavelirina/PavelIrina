@@ -189,13 +189,29 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-image: url('чб.png'); /* Заглушка, замените на свое */
             background-color: #333; /* Фолбек */
-            background-size: cover;
-            background-position: center;
             color: white;
             padding: 0 25px;
             position: relative;
+            overflow: hidden; /* Скрываем края параллакса */
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%; /* Запас для параллакс-сдвига */
+            background-image: url('чб.png'); /* Заглушка, замените на свое */
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        .hero-section > div:not(.hero-bg) {
+            position: relative;
+            z-index: 1; /* Чтобы текст был поверх фона */
         }
 
         .cursive {
@@ -561,6 +577,7 @@
     
     <!-- Секция 1: Герой -->
     <section class="hero-section">
+        <div class="hero-bg"></div>
         <div style="letter-spacing: 5px; text-transform: uppercase; font-size: 1.1rem; margin-top: -80px;">The Wedding Day</div>
         <div class="cursive" style="margin: 20px 0;">Павел & Ирина</div>
     </section>
@@ -633,7 +650,7 @@
         <p class="section-title">Праздничный ужин</p>
         
         <div class="parallax-container">
-            <div class="parallax-img" style="background-image: url('https://safarovadom.com/upload/dev2fun.imagecompress/webp/resize_cache/iblock/85c/800_600_0/eussl8bvtx772j02eh3uz1mz1k1wuoxt.webp');"></div>
+            <div class="parallax-img" style="background-image: url('домик.png');"></div>
         </div>
         
         <h3 style="letter-spacing: 3px; font-weight: 500;">ЗАГОРОДНЫЙ ДОМИК</h3>
@@ -642,7 +659,7 @@
         <div class="map-wrapper">
           <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Afd1b42d456cdfdb0e80fcc7513180195dbdf020a153a7eaa7651154928934d08&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
         </div>
-        <a href="https://yandex.ru/maps/?rtext=~Городской+округ+Балашиха,+Садовое+товарищество+Вымпел,+4&rtt=mt" target="_blank" class="btn">Маршрут к Домику</a>
+        <a href="https://yandex.ru/maps/?rtext=~55.741544,37.669818&rtt=mt" target="_blank" class="btn">МАРШРУТ К ДОМИКУ</a>
     </section>
 
     <!-- Тайминг -->
@@ -811,6 +828,13 @@ function openEnvelope() {
     // СКРИПТ ПАРАЛЛАКСА
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
+        
+        // Параллакс для главной фоновой картинки (шапка)
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
+
         document.querySelectorAll('.parallax-img').forEach(img => {
             const parent = img.parentElement;
             const speed = 0.2; 
